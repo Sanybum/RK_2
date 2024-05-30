@@ -1,0 +1,23 @@
+name: RK_2
+run-name: creating assets
+on: [push]
+jobs:
+  compile_on_ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout and get modules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Build with main
+        run: |
+          cmake -H. -B_build
+          cmake --build _build
+      - name: Test
+        run: cmake --build _build --target test -- ARGS=--verbose
+
+      - name: Upload build
+        uses: actions/upload-artifact@v2
+        with:
+          name: build_folder
+          path: _build
