@@ -12,6 +12,7 @@ private:
 public:
   MCircle(double radius_) : Circle(radius_) {}
   MOCK_METHOD(void, radius, (), (const));
+  MOCK_METHOD(void, accept, ( ShapeVisitor const& v), ());
 };
 
 class MSquare : public Square {
@@ -41,4 +42,10 @@ TEST (GetParametrs, test3) {
   Square b(5);
   EXPECT_EQ(a.radius(), 3.14);
   EXPECT_EQ(b.side(), 5);
+}
+
+TEST (NewTest, test3) {
+  std::unique_ptr<MCircle> el = std::make_unique<MCircle>( 2.3 );
+  EXPECT_CALL(*el, accept(testing::_)).Times(AtLeast(1));
+  el->accept(Draw{});
 }

@@ -11,6 +11,7 @@ class ShapeVisitor
 
    virtual void visit( Circle const& /*, ...*/ ) const = 0;
    virtual void visit( Square const& /*, ...*/ ) const = 0;
+
    // Possibly more visit() functions, one for each concrete shape
 };
 
